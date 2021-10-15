@@ -14,16 +14,23 @@ export class AppController {
 
     @Post('register')
     async register(
-        @Body('name') name: string,
+        @Body('first_name') first_name: string,
+        @Body('last_name') last_name: string,
         @Body('email') email: string,
-        @Body('password') password: string
+        @Body('password') password: string,
+        @Body('mobile_no') mobile_no: Number,
+        @Body('user_type') user_type: string,
     ) {
         const hashedPassword = await bcrypt.hash(password, 12);
 
         const user = await this.appService.create({
-            name,
+            first_name,
+            last_name,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            mobile_no,
+            user_type
+
         });
 
         delete user.password;
